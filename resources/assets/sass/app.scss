@@ -164,3 +164,11 @@ input {
 .panel {
   margin-top: 50px;
 }
+
+/* 登录按钮  */
+#logout {
+  cursor: default;
+  &:hover {
+    background-color: transparent;
+  }
+}
