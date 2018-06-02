@@ -41,6 +41,7 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
+require __DIR__.'/helpers.php'; //heroku部署  数据库判断文件自动加载
 /*
 |--------------------------------------------------------------------------
 | Return The Application
