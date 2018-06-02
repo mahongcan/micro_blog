@@ -7,6 +7,17 @@ use Illuminate\Support\Facades\Auth;
 
 class SessionsController extends Controller
 {
+
+    /**
+     * 只让未登录用户访问
+    */
+    public function __construct()
+    {
+        $this->middleware('guest',[
+            'only' => ['create']
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -55,7 +66,7 @@ class SessionsController extends Controller
             //存入闪存
             session()->flash('success','欢迎回来！');
             //当登录成功后执行 Auth::User 能获取当前登录人的信息
-            return redirect()->route('users.show',[Auth::User()]);
+            return redirect()->intended(route('users.show', [Auth::user()]));
         } else {
             return back()->with('danger','很抱歉，您的邮箱和密码不匹配');
         }

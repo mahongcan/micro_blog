@@ -33,3 +33,6 @@ Route::post('login','SessionsController@store')->name('login');
 
 //退出登录
 Route::delete('logout','SessionsController@destroy')->name('logout');
+
+//更改用户页面
+Route::get('/users/{id}/edit','UsersController@edit')->name('users.edit');
