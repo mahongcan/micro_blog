@@ -8523,3 +8523,13 @@ input {
   margin-top: 50px;
 }
 
+/* 登录按钮  */
+
+#logout {
+  cursor: default;
+}
+
+#logout:hover {
+  background-color: transparent;
+}
+

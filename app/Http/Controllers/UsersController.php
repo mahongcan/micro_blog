@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
 class UsersController extends Controller
@@ -40,6 +40,8 @@ class UsersController extends Controller
             'email' => $request->email,
         ]);
 
+        //注册成功自动登录
+        Auth::login($user);
         //显示用户注册成功信息 重定向显示详情页
         session()->flash('success','欢迎，您将在这里开启一段新的旅程~');
         return redirect()->route('users.show',[$user]);
