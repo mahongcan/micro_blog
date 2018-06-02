@@ -100,8 +100,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'email' => [
+            'required' => '邮箱 不能为空。',
         ],
     ],
 
