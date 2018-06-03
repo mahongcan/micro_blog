@@ -21,9 +21,10 @@ class StatusesController extends Controller
         ]);
 
         //这样会将登录人的ID存入发布文章表 的ID
-        Auth::user()->statuses()->create([
+        \Auth::user()->statuses()->create([
             'content' => $request['content']
         ]);
+        session()->flash('success','发布成功');
         return redirect()->back();
     }
 
