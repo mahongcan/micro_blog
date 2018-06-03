@@ -55,4 +55,18 @@ class User extends Authenticatable
     {
         $this->notify(new ResetPassword($token));
     }
+
+    //获取这个用户发布所有的内容
+    public function statuses()
+    {
+        return $this->hasMany(Status::class);
+    }
+
+    /**
+     *  获取当前用户发布所有内容 并按倒叙排序
+    */
+    public function feed()
+    {
+        return $this->statuses()->orderBy('created_at','desc');
+    }
 }
