@@ -130,7 +130,7 @@ class UsersController extends Controller
 
         //执行发送
         Mail::send($view, $data, function ($message) use($from, $name, $to, $subject) {
-            $message->from($from, $name)->to($to)->subject($subject);
+            $message->to($to)->subject($subject);
         });
     }
 
