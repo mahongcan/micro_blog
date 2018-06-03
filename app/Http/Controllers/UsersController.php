@@ -136,6 +136,9 @@ class UsersController extends Controller
         });
     }
 
+    /**
+     *  执行激活账号
+    */
     public function confirmEmail($token)
     {
         $user = User::where('activation_token',$token)->firstOrFail();
@@ -146,5 +149,25 @@ class UsersController extends Controller
         Auth::login($user);  //执行登录
         session()->flash('success', '恭喜你，激活成功！');
         return redirect()->route('users.show', [$user]);
+    }
+
+    /**
+     *  关注列表
+    */
+    public function followings(User $user)
+    {
+        $users = $user->followings()->paginate(30);
+        $title = '关注的人';
+        return view('users.show_follow', compact('users', 'title'));
+    }
+
+    /**
+     *  粉丝列表
+    */
+    public function followers(User $user)
+    {
+        $users = $user->followers()->paginate(30);
+        $title = '粉丝';
+        return view('users.show_follow', compact('users', 'title'));
     }
 }
