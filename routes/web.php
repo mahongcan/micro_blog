@@ -36,3 +36,6 @@ Route::delete('logout','SessionsController@destroy')->name('logout');
 
 //更改用户页面
 Route::get('/users/{id}/edit','UsersController@edit')->name('users.edit');
+
+//用户激活
+Route::get('/signup/confirm/{token}','UsersController@confirmEmail')->name('confirm_email');
