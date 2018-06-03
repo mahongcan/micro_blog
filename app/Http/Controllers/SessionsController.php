@@ -46,12 +46,11 @@ class SessionsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
+        $credentials = $this->validate($request,[
             'email' => 'required|email|max:255',
             'password' => 'required'
         ]);
-        $email = $request->input('email');
-        $password = $request->input('password');
+
         /*
           attempt 方法执行的代码逻辑如下：
             1、使用 email 字段的值在数据库中查找；
@@ -62,11 +61,18 @@ class SessionsController extends Controller
             5、如果匹配后两个值不一致，则返回 false；如果用户未找到，则返回 false。
             6、第二参数是记住我
         */
-        if(Auth::attempt(['email' => $email, 'password' => $password], $request->has('remember'))) {
-            //存入闪存
-            session()->flash('success','欢迎回来！');
-            //当登录成功后执行 Auth::User 能获取当前登录人的信息
-            return redirect()->intended(route('users.show', [Auth::user()]));
+        if(Auth::attempt($credentials, $request->has('remember'))) {
+            if (Auth::user()->activated) {
+                //存入闪存
+                session()->flash('success','欢迎回来！');
+                //当登录成功后执行 Auth::User 能获取当前登录人的信息
+                return redirect()->intended(route('users.show', [Auth::user()]));
+            } else {
+                Auth::logout();
+                session()->flash('warning', '你的账号未激活，请检查邮箱中的注册邮件进行激活。');
+                return redirect('/');
+            }
+
         } else {
             return back()->with('danger','很抱歉，您的邮箱和密码不匹配');
         }

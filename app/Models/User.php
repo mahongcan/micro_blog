@@ -28,6 +28,18 @@ class User extends Authenticatable
     ];
 
     /**
+     * 监听
+    */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            $user->activation_token = str_random(30);
+        });
+    }
+
+    /**
      * Gravatar官网 获取用户头像
     */
     public function gravatar($size = 100)
